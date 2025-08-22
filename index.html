@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br" manifest="offline.appcache">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Minha App Store">
-  
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Splash screens para dispositivos iOS -->
-  <link rel="apple-touch-startup-image"
-        media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
-        href="launch-640x1136.png">
-  <!-- Adicione outras resoluções conforme necessário -->
-  
-  <title>Store Legacy iOS</title>
+  <title>Instalação do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #f7f7f7;
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 18px;
+      color: white;
+      background: #007aff;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #005bb5;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>App Store { iOS 6,5 and 4 }</h1>
-  </header>
-
-  <main id="app-list">
-    <!-- JavaScript irá popular os apps aqui -->
-  </main>
-
-  <script src="app-store.js"></script>
+  <h1>Instalar Nome do App</h1>
+  <p>Clique no botão abaixo para instalar:</p>
+  <a class="btn" href="itms-services://?action=download-manifest&url=https://gabrielzinhozinho.github.io/repositorio/manifest.plist">
+    Instalar App
+  </a>
 </body>
 </html>
