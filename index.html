@@ -1,217 +1,50 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Loja de Apps iOS — Sua Empresa</title>
-
-  <!-- Opcional: Smart App Banner (App Store). Substitua o app-id pelo ID real do app na App Store -->
-  <!-- <meta name="apple-itunes-app" content="app-id=1234567890"> -->
-
+  <meta charset="UTF-8">
+  <title>Loja Jailbreak - Instalar Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root{
-      --bg:#0b1020;--card:#11172b;--ink:#e9eefc;--muted:#9fb1d9;--brand:#5b8cff;--brand-2:#60e1ff;--ok:#20c997;--warn:#ffc107;
-      --radius:18px;
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px 20px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;line-height:1.35;background:linear-gradient(180deg,#0a0f1e, #0f1731 70%, #0a0f1e);color:var(--ink)}
-    .container{max-width:1000px;margin:0 auto;padding:24px}
-    .hero{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:18px 22px;background:radial-gradient(1200px 400px at 50% -50%, rgba(96,225,255,.15), transparent),var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .hero h1{font-size:clamp(22px,3vw,34px);margin:0 0 6px}
-    .hero p{margin:0;color:var(--muted)}
-    .badge{display:inline-flex;gap:8px;align-items:center;background:rgba(96,225,255,.12);border:1px solid rgba(96,225,255,.3);padding:6px 10px;border-radius:999px;font-size:12px;color:#c9f6ff}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:22px}
-    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-    .card h3{margin:8px 0 4px;font-size:18px}
-    .card p{margin:0 0 12px;color:var(--muted);font-size:14px}
-    .tag{display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:4px 8px;border-radius:999px;font-size:12px;color:var(--ink)}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{appearance:none;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));padding:10px 14px;border-radius:12px;color:var(--ink);font-weight:600;cursor:pointer;transition:.2s;flex:1;text-align:center}
-    .btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.2)}
-    .btn:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(30%)}
-    .btn.primary{border-color:rgba(91,140,255,.45);background:linear-gradient(180deg, rgba(91,140,255,.35), rgba(91,140,255,.15));}
-    .btn.success{border-color:rgba(32,201,151,.45);background:linear-gradient(180deg, rgba(32,201,151,.35), rgba(32,201,151,.15));}
-    header{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;font-weight:800}
-    .search{display:flex;gap:10px;margin-top:12px}
-    .search input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--ink)}
-    .hint{margin-top:8px;color:var(--muted);font-size:12px}
-    footer{margin:30px auto 10px;text-align:center;color:var(--muted);font-size:12px}
-    details{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:10px 12px;border-radius:12px}
-    summary{cursor:pointer;font-weight:600}
-    code, pre{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;font-size:12px}
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .app-box {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    a.install-btn {
+      display: inline-block;
+      background-color: #007aff;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 10px;
+    }
   </style>
-
-  <script>
-    // Detecta iOS (Safari/instalação direta funciona apenas em iPhone/iPad)
-    const isIOS = /iP(hone|od|ad)/.test(navigator.platform) ||
-                  (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-
-    function installFromManifest(plistUrl){
-      if(!isIOS){
-        alert("A instalação direta (itms-services) só funciona em dispositivos iOS.");
-        return;
-      }
-      // Gatilho do esquema itms-services
-      const url = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(plistUrl);
-      window.location.href = url;
-    }
-
-    function copyToClipboard(text){
-      navigator.clipboard?.writeText(text);
-    }
-
-    function filterApps(){
-      const q = document.querySelector('#q').value.toLowerCase();
-      for(const card of document.querySelectorAll('.card')){
-        const hay = card.innerText.toLowerCase();
-        card.style.display = hay.includes(q) ? '' : 'none';
-      }
-    }
-  </script>
 </head>
 <body>
-  <div class="container">
-    <div class="hero">
-      <header>
-        <div class="logo"></div>
-        <div>
-          <h1>Loja de Apps iOS — Sua Empresa</h1>
-          <p>Instale via <strong>App Store</strong> ou faça <strong>instalação direta</strong> (Enterprise) usando <code>itms-services</code>.</p>
-          <div class="badge">HTTPS obrigatório para manifestos (.plist) e .ipa assinados</div>
-        </div>
-      </header>
-    </div>
+  <h1>Loja Jailbreak iOS</h1>
+  <p>Instalação OTA via <code>itms-services</code></p>
 
-    <div class="search">
-      <input id="q" type="search" placeholder="Buscar app (ex.: Catálogo Vendas)" oninput="filterApps()" aria-label="Buscar app" />
-      <button class="btn" onclick="document.getElementById('q').value=''; filterApps()">Limpar</button>
-    </div>
-    <div class="hint">Dica: em iOS, abra esta página no <strong>Safari</strong> para instalação direta.</div>
-
-    <!-- LISTA DE APPS -->
-    <section class="grid" aria-label="Lista de aplicativos">
-
-      <!-- EXEMPLO 1: App com link da App Store E instalação direta enterprise -->
-      <article class="card">
-        <div class="row">
-          <span class="tag">Produtividade</span>
-          <span class="tag">iPhone • iPad</span>
-        </div>
-        <h3>Catálogo Vendas</h3>
-        <p>Visualize e compartilhe o portfólio de produtos da empresa, mesmo offline.</p>
-        <div class="row">
-          <!-- Link App Store: substitua pelo link real -->
-          <a class="btn primary" href="https://apps.apple.com/app/id1234567890" rel="noopener">Abrir na App Store</a>
-
-          <!-- Instalação direta via itms-services: substitua pela URL HTTPS do seu manifest.plist -->
-          <button class="btn success" onclick="installFromManifest('https://seu-dominio.com/distribuicao/catalogo-vendas/manifest.plist')">Instalação direta</button>
-        </div>
-        <div class="hint">Requer dispositivo iOS e certificado empresarial válido. Ajuste o <code>manifest.plist</code> e o <code>.ipa</code>.
-        </div>
-      </article>
-
-      <!-- EXEMPLO 2: App interno somente Enterprise -->
-      <article class="card">
-        <div class="row">
-          <span class="tag">Interno</span>
-          <span class="tag">Beta • Teste</span>
-        </div>
-        <h3>Relatórios Internos</h3>
-        <p>Acesso rápido a dashboards e KPIs internos.</p>
-        <div class="row">
-          <button class="btn success" onclick="installFromManifest('https://seu-dominio.com/apps/relatorios/manifest.plist')">Instalar (Enterprise)</button>
-          <button class="btn" onclick="copyToClipboard('itms-services://?action=download-manifest&url=https%3A%2F%2Fseu-dominio.com%2Fapps%2Frelatorios%2Fmanifest.plist')">Copiar link</button>
-        </div>
-        <div class="hint">Caso veja aviso de desenvolvedor não confiável, autorize em <em>Ajustes → Geral → VPN e Gerenciamento de Dispositivo</em>.</div>
-      </article>
-
-      <!-- EXEMPLO 3: App só App Store -->
-      <article class="card">
-        <div class="row">
-          <span class="tag">Público</span>
-        </div>
-        <h3>Atendimento Clientes</h3>
-        <p>Central de suporte para clientes com chat e FAQs.</p>
-        <div class="row">
-          <a class="btn primary" href="https://apps.apple.com/app/id9876543210" rel="noopener">App Store</a>
-        </div>
-        <div class="hint">Para destacar no topo do Safari, ative o Smart App Banner no &lt;head&gt; (meta <code>apple-itunes-app</code>).</div>
-      </article>
-
-    </section>
-
-    <h2 style="margin-top:28px">Como preparar a instalação direta (Enterprise)</h2>
-    <div class="grid">
-      <div class="card">
-        <ol>
-          <li>Assine o <strong>.ipa</strong> com certificado empresarial (Apple Developer Enterprise Program) e garanta que o bundle-id no <code>Info.plist</code> corresponda ao Provisioning Profile.</li>
-          <li>Hospede <strong>.ipa</strong> e <strong>manifest.plist</strong> em <strong>HTTPS</strong> (TLS válido).</li>
-          <li>No <code>manifest.plist</code>, aponte para a URL pública do .ipa e os metadados (bundle-id, version, title).</li>
-          <li>Use o esquema <code>itms-services://?action=download-manifest&url=URL_DO_PLIST</code> como acima.</li>
-        </ol>
-        <details>
-          <summary>Exemplo de <code>manifest.plist</code></summary>
-          <pre>{/* Salve como XML plist real; este bloco é apenas de referência */}
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-  &lt;dict&gt;
-    &lt;key&gt;items&lt;/key&gt;
-    &lt;array&gt;
-      &lt;dict&gt;
-        &lt;key&gt;assets&lt;/key&gt;
-        &lt;array&gt;
-          &lt;dict&gt;
-            &lt;key&gt;kind&lt;/key&gt;&lt;string&gt;software-package&lt;/string&gt;
-            &lt;key&gt;url&lt;/key&gt;&lt;string&gt;https://seu-dominio.com/distribuicao/catalogo-vendas/app.ipa&lt;/string&gt;
-          &lt;/dict&gt;
-          &lt;dict&gt;
-            &lt;key&gt;kind&lt;/key&gt;&lt;string&gt;display-image&lt;/string&gt;
-            &lt;key&gt;needs-shine&lt;/key&gt;&lt;true/&gt;
-            &lt;key&gt;url&lt;/key&gt;&lt;string&gt;https://seu-dominio.com/distribuicao/catalogo-vendas/icon.png&lt;/string&gt;
-          &lt;/dict&gt;
-        &lt;/array&gt;
-        &lt;key&gt;metadata&lt;/key&gt;
-        &lt;dict&gt;
-          &lt;key&gt;bundle-identifier&lt;/key&gt;&lt;string&gt;com.suaempresa.catalogo&lt;/string&gt;
-          &lt;key&gt;bundle-version&lt;/key&gt;&lt;string&gt;1.0.0&lt;/string&gt;
-          &lt;key&gt;kind&lt;/key&gt;&lt;string&gt;software&lt;/string&gt;
-          &lt;key&gt;subtitle&lt;/key&gt;&lt;string&gt;Sua Empresa&lt;/string&gt;
-          &lt;key&gt;title&lt;/key&gt;&lt;string&gt;Catálogo Vendas&lt;/string&gt;
-        &lt;/dict&gt;
-      &lt;/dict&gt;
-    &lt;/array&gt;
-  &lt;/dict&gt;
-&lt;/plist&gt;
-          </pre>
-        </details>
-      </div>
-      <div class="card">
-        <strong>Observações importantes</strong>
-        <ul>
-          <li>A instalação direta não funciona em navegadores de terceiros no iOS (use Safari).</li>
-          <li>O domínio precisa ter certificado TLS confiável (sem autoassinado).</li>
-          <li>Usuários devem confiar no perfil do desenvolvedor em: <em>Ajustes → Geral → VPN e Gerenciamento de Dispositivo</em>.</li>
-          <li>Para apps públicos, prefira o link da App Store (Smart App Banner melhora a conversão).</li>
-        </ul>
-      </div>
-    </div>
-
-    <footer>
-      © <span id="y"></span> Sua Empresa • Loja de Apps iOS
-    </footer>
+  <div class="app-box">
+    <h2>App Custom</h2>
+    <p>Versão modificada para dispositivos com Jailbreak.</p>
+    <a class="install-btn" href="itms-services://?action=download-manifest&url=https://seusite.com/apps/app1.plist">
+      Instalar App
+    </a>
   </div>
-
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
-
-  <!--
-    🔧 COMO USAR
-    1) Salve este arquivo como index.html e publique em um host com HTTPS.
-    2) Troque os links da App Store e das URLs de manifest.plist pelos seus.
-    3) Publique cada app enterprise com seu próprio .ipa e manifest.plist.
-    4) Opcional: ative o Smart App Banner no <head> com o "apple-itunes-app".
-  -->
 </body>
 </html>
