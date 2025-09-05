@@ -1,1 +1,99 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e5e5e5;
+  color: #333;
+}
 
+/* Barra superior */
+#topbar {
+  background: linear-gradient(#a5c6f9, #3477db);
+  color: white;
+  padding: 12px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Área de conteúdo */
+#content {
+  padding: 15px;
+}
+
+/* Lista de apps */
+.app-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: transform 0.1s;
+}
+
+.app-item:hover {
+  transform: scale(1.01);
+}
+
+.app-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  margin-right: 12px;
+}
+
+.app-details {
+  flex-grow: 1;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+}
+
+.app-description {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.install-button {
+  background: linear-gradient(#a5c6f9, #3477db);
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.install-button:hover {
+  background: linear-gradient(#88b0f5, #2c6cd6);
+}
+
+/* Rodapé estilo tab bar */
+#tabbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(#e0e0e0, #b0b0b0);
+  border-top: 1px solid #999;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+}
+
+#tabbar a {
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  font-size: 12px;
+}
