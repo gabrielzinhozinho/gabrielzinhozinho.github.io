@@ -12,19 +12,19 @@
           <key>kind</key>
           <string>software-package</string>
           <key>url</key>
-          <string>http://raw.githubusercontent.com/gabrielzinhozinho/Debpps/refs/heads/main/vine.ipa</string>
+          <string>http://raw.githubusercontent.com/gabrielzinhozinho/gabrielzinhozinho.github.io/refs/heads/main/Netflix%20%5BNetflix%20Inc.%5D%20(v2.0.1%20v1190224%20Univ%20os40).rc333_841.ipa</string>
         </dict>
       </array>
       <key>metadata</key>
       <dict>
         <key>bundle-identifier</key>
-        <string>com.vine.iphone</string>
+        <string>com.netflix.Netflix</string>
         <key>bundle-version</key>
-        <string>1.3.3</string>
+        <string>2.0.1</string>
         <key>kind</key>
         <string>software</string>
         <key>title</key>
-        <string>Vine</string>
+        <string>Netflix</string>
       </dict>
     </dict>
   </array>
