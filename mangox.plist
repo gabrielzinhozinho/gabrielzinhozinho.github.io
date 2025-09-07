@@ -13,14 +13,6 @@
 					<key>url</key>
 					<string>https://www.dl.dropboxusercontent.com/s/xl8uy4v4hwph56o/mangox.ipa?dl=0</string>
 				</dict>
-				<dict>
-					<key>kind</key>
-					<string>display-image</string>
-					<key>needs-shine</key>
-					<true/>
-					<key>url</key>
-					<string>https://mtmdev.org/ipa-content/mangox.png</string>
-				</dict>
 			</array>
 			<key>metadata</key>
 			<dict>
