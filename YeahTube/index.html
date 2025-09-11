@@ -3,163 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>YeahTube</title>
+<title>YeahTube Mobile (2011)</title>
 <style>
-    <div class="logo">YeahTube</div>
-  <nav>
-    <button onclick="index.html">Home</button>
-    <button onclick="alert('Explorar vídeos')">Explorar</button>
-    <button onclick="alert('Upload')">Upload</button>
-    <button onclick="myaccount.html">Conta</button>
-  </nav>
-</header>
-
   body {
     margin:0;
     font-family: Arial, sans-serif;
-    background:#f2f2f2;
+    background:#fff;
     color:#111;
+    padding-bottom:60px; /* espaço para a barra inferior */
   }
-
-  /* Topbar */
   header {
-    background:#cc181e;
+    background:#cc181e; /* vermelho clássico do YouTube */
     color:#fff;
+    padding:8px;
     display:flex;
     align-items:center;
-    padding:8px 12px;
-    gap:10px;
+    gap:8px;
   }
   header .logo {
     font-weight:bold;
     font-size:18px;
   }
-  header nav {
-    margin-left:auto;
-    display:flex;
-    gap:10px;
-  }
-  header nav button {
-    background:transparent;
-    border:none;
-    color:#fff;
-    font-weight:bold;
-    cursor:pointer;
-  }
-
-  /* Layout principal */
-  .wrap {
-    display:flex;
-    max-width:1180px;
-    margin:18px auto;
-    gap:16px;
-    padding:0 12px;
-  }
-
-  /* Sidebar */
-  .sidebar {
-    width:220px;
-  }
-  .sidebar .section {
-    background:#fff;
-    border:1px solid #ddd;
-    padding:10px;
-    margin-bottom:12px;
-    border-radius:3px;
-  }
-  .sidebar ul {
-    list-style:none;
-    padding:0;
-    margin:0;
-  }
-  .sidebar li {
-    padding:8px 6px;
-    cursor:pointer;
-    font-size:14px;
-    color:#111;
-  }
-  .sidebar li:hover {
-    background:#f6f6f6;
-  }
-
-  /* Conteúdo da conta */
-  .main {
+  header input[type="text"]{
     flex:1;
+    padding:6px;
+    border:0;
+    border-radius:2px;
+    font-size:14px;
   }
-  .account-header {
+  header button {
+    padding:6px 10px;
     background:#fff;
-    border:1px solid #ddd;
-    border-radius:4px;
-    padding:12px;
-    margin-bottom:12px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .avatar {
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#ccc;
-    flex-shrink:0;
-  }
-  .account-info h1 {
-    margin-bottom:4px;
-    font-size:18px;
-  }
-  .account-info p {
-    font-size:13px;
-    color:#555;
+    border:0;
+    border-radius:2px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#cc181e;
   }
 
-  /* Uploads recentes */
-  .uploads {
-    background:#fff;
-    border:1px solid #ddd;
-    border-radius:4px;
-    padding:12px;
-  }
-  .uploads h2 {
-    font-size:16px;
-    margin-bottom:8px;
-  }
-  .upload-list {
+  .video-list {
     list-style:none;
     margin:0;
     padding:0;
   }
-  .upload-list li {
+  .video {
+    border-bottom:1px solid #ddd;
     display:flex;
-    gap:10px;
-    padding:6px 0;
-    border-bottom:1px solid #eee;
+    padding:8px;
+    gap:8px;
   }
-  .upload-list li:last-child {
-    border-bottom:none;
-  }
-  .upload-thumb {
+  .thumb {
     width:120px;
-    height:70px;
+    height:90px;
     background:#000;
     flex-shrink:0;
   }
-  .upload-thumb img {
+  .thumb img {
     width:100%;
     height:100%;
     object-fit:cover;
   }
-  .upload-meta {
+  .meta {
+    flex:1;
     font-size:13px;
   }
-  .upload-meta .title {
+  .title {
     font-weight:bold;
+    margin-bottom:4px;
+  }
+  .channel {
+    color:#555;
     margin-bottom:2px;
   }
-  .upload-meta .views {
+  .views {
     color:#777;
+    font-size:12px;
   }
 
-  /* Mobile: barra inferior */
+  /* Barra de navegação inferior */
   .bottom-nav {
     position:fixed;
     bottom:0;
@@ -187,44 +108,61 @@
     color:#cc181e;
   }
 
-  /* Responsivo */
-  @media (max-width:980px){
-    .wrap { flex-direction:column; }
-    .sidebar { width:100%; }
+  footer {
+    display:none; /* escondemos o footer antigo, usamos barra inferior */
   }
 </style>
 </head>
 <body>
-  <div class="uploads">
-      <h2>Popular Now</h2>
-      <ul class="upload-list">
-        <li>
-          <div class="upload-thumb"><img src="https://picsum.photos/seed/101/160/90" alt=""></div>
-          <div class="upload-meta">
-            <div class="title">Tour pelo meu setup retrô</div>
-            <div class="views">1.2M views • há 3 anos</div>
-          </div>
-        </li>
-        <li>
-          <div class="upload-thumb"><img src="https://picsum.photos/seed/102/160/90" alt=""></div>
-          <div class="upload-meta">
-            <div class="title">Top 10 jogos de 2011</div>
-            <div class="views">340k views • há 5 anos</div>
-          </div>
-        </li>
-        <li>
-          <div class="upload-thumb"><img src="https://picsum.photos/seed/103/160/90" alt=""></div>
-          <div class="upload-meta">
-            <div class="title">Compilação de fails clássicos</div>
-            <div class="views">2.4M views • há 6 anos</div>
-          </div>
-        </li>
-      </ul>
+
+<header>
+  <div class="logo">YeahTube</div>
+  <input type="text" placeholder="Pesquisar">
+  <button>OK</button>
+</header>
+
+<ul class="video-list">
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/11/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Tour pelo meu setup retrô</div>
+      <div class="channel">RetroGamer</div>
+      <div class="views">1.2M views • há 3 anos</div>
     </div>
-  </main>
+  </li>
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/22/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Top 10 jogos de 2011</div>
+      <div class="channel">GameRank</div>
+      <div class="views">340k views • há 5 anos</div>
+    </div>
+  </li>
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/33/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Compilação de fails clássicos</div>
+      <div class="channel">FailsBR</div>
+      <div class="views">2.4M views • há 6 anos</div>
+    </div>
+  </li>
+</ul>
+
+<!-- Barra inferior -->
+<div class="bottom-nav">
+  <button onclick="alert('Home clicado')">
+    🏠<br>Home
+  </button>
+  <button onclick="alert('Explorar clicado')">
+    🔍<br>Explorar vídeos
+  </button>
+  <button onclick="alert('Upload clicado')">
+    ⬆️<br>Upload
+  </button>
+  <button onclick="alert('Minha Conta clicado')">
+    👤<br>Minha Conta
+  </button>
 </div>
 
-
-
 </body>
-</html>
+</html
