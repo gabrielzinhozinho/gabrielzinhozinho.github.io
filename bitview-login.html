@@ -3,11 +3,14 @@
   <head>
     <title>BitView Cookie Login</title>
     <script type="text/javascript">
-      document.cookie = "PHPSESSID=qivsf9mtobtq7f5ugp2lsr21b7; path=/; domain=bitview.net";
-      window.location.href = "https://www.bitview.net";
+      // Define o cookie de sessão do BitView
+      document.cookie = "PHPSESSID=abc123; path=/; domain=bitview.net";
+
+      // Redireciona para o site após definir o cookie
+      window.location.href = "http://www.bitview.net";
     </script>
   </head>
   <body>
-    Redirecionando para BitView...
+    <p>Injetando cookie e redirecionando para o BitView...</p>
   </body>
 </html>
