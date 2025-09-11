@@ -12,18 +12,25 @@
 </header>
 
 <main>
-  <section id="register">
+  <section id="videos">
+    <h2>Vídeos</h2>
+    <div id="videoList">Carregando vídeos...</div>
+  </section>
+
+  <section id="loginSection">
+    <h2>Login (opcional)</h2>
+    <input type="text" id="logUser" placeholder="Usuário">
+    <input type="password" id="logPass" placeholder="Senha">
+    <button onclick="login()">Login</button>
+    <p>Ainda não tem conta? <button onclick="toggleRegister()">Registrar</button></p>
+  </section>
+
+  <section id="registerSection" style="display:none;">
     <h2>Registrar</h2>
     <input type="text" id="regUser" placeholder="Usuário">
     <input type="password" id="regPass" placeholder="Senha">
     <button onclick="register()">Registrar</button>
-  </section>
-
-  <section id="login">
-    <h2>Login</h2>
-    <input type="text" id="logUser" placeholder="Usuário">
-    <input type="password" id="logPass" placeholder="Senha">
-    <button onclick="login()">Login</button>
+    <button onclick="toggleRegister()">Cancelar</button>
   </section>
 
   <section id="uploadSection" style="display:none;">
@@ -35,4 +42,4 @@
 
 <script src="app.js"></script>
 </body>
-</html>
+</html
