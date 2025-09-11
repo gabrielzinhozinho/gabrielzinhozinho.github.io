@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulador de Daltonismo — Exemplo</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{margin:0;padding:24px;background:#f7f7fb;color:#111}
+    .card{background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(20,20,50,.06);padding:18px;max-width:980px;margin:0 auto}
+    header{display:flex;gap:16px;align-items:center}
+    header h1{font-size:20px;margin:0}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .controls > *{min-width:160px}
+    label{display:block;font-size:12px;color:#555;margin-bottom:6px}
+    input[type=range]{width:100%}
+    canvas{width:100%;max-width:800px;border-radius:8px;background:#ddd;display:block;margin-top:12px}
+    .row{display:flex;gap:12px;align-items:center}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:#2563eb;color:#fff;text-decoration:none;border:none;cursor:pointer}
+    .muted{color:#666;font-size:13px}
+    footer{margin-top:12px;font-size:13px;color:#666}
+    #originalPreview{max-width:120px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <div>
+        <h1>Simulador de Daltonismo (versão exemplo)</h1>
+        <div class="muted">Carregue uma imagem, escolha o tipo e ajuste a gravidade (0 = normal, 1 = total).</div>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div>
+        <label for="file">Imagem</label>
+        <input id="file" type="file" accept="image/*">
+      </div>
+
+      <div>
+        <label for="type">Tipo de daltonismo</label>
+        <select id="type">
+          <option value="normal">Visão normal</option>
+          <option value="protanopia">Protanopia (vermelho)</option>
+          <option value="deuteranopia">Deuteranopia (verde)</option>
+          <option value="tritanopia">Tritanopia (azul)</option>
+        </select>
+      </div>
+
+      <div style="flex:1;min-width:220px">
+        <label for="severity">Gravidade <span id="sevVal">1.00</span></label>
+        <input id="severity" type="range" min="0" max="1" step="0.01" value="1">
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:flex-end">
+        <button id="download" class="btn">Baixar imagem</button>
+      </div>
+
+    </div>
+
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div style="display:flex;gap:12px;align-items:center;margin-top:10px">
+      <img id="originalPreview" alt="Original" style="display:none">
+      <div class="muted">Clique na imagem para ver/ocultar original.</div>
+    </div>
+
+    <footer>
+      Este é um simulador aproximado para visualização e uso educacional. Para diagnóstico consulte um profissional de saúde ocular.
+    </footer>
+  </div>
+
+<script>
+// Matrizes aproximadas (valores comumente usados em simulações simples).
+const MATRICES = {
+  normal: [
+    [1,0,0],
+    [0,1,0],
+    [0,0,1]
+  ],
+  protanopia: [
+    [0.567,0.433,0.0],
+    [0.558,0.442,0.0],
+    [0.0,0.242,0.758]
+  ],
+  deuteranopia: [
+    [0.625,0.375,0.0],
+    [0.7,0.3,0.0],
+    [0.0,0.3,0.7]
+  ],
+  tritanopia: [
+    [0.95,0.05,0.0],
+    [0.0,0.433,0.567],
+    [0.0,0.475,0.525]
+  ]
+};
+
+const fileInput = document.getElementById('file');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const typeSelect = document.getElementById('type');
+const severity = document.getElementById('severity');
+const sevVal = document.getElementById('sevVal');
+const downloadBtn = document.getElementById('download');
+const originalPreview = document.getElementById('originalPreview');
+
+let img = new Image();
+let imgLoaded = false;
+let showOriginal = false;
+
+function clamp(v){return Math.max(0,Math.min(255,v));}
+
+function applyMatrixToImageData(imageData, matrix, mix){
+  // mix: 0..1 how much to apply the matrix (0 = original, 1 = full simulated)
+  const d = imageData.data;
+  for(let i=0;i<d.length;i+=4){
+    const r = d[i], g = d[i+1], b = d[i+2];
+    // apply matrix (simple linear RGB matrix, not linearizing gamma) — good enough for demo
+    const nr = matrix[0][0]*r + matrix[0][1]*g + matrix[0][2]*b;
+    const ng = matrix[1][0]*r + matrix[1][1]*g + matrix[1][2]*b;
+    const nb = matrix[2][0]*r + matrix[2][1]*g + matrix[2][2]*b;
+
+    d[i]   = clamp( (1-mix)*r + mix*nr );
+    d[i+1] = clamp( (1-mix)*g + mix*ng );
+    d[i+2] = clamp( (1-mix)*b + mix*nb );
+    // alpha stays
+  }
+}
+
+function resizeCanvasToImage(w,h){
+  // fit image into max width while keeping ratio
+  const maxWidth = 800;
+  if(w>maxWidth){
+    const ratio = maxWidth/w;
+    canvas.width = Math.round(w*ratio);
+    canvas.height = Math.round(h*ratio);
+  } else {
+    canvas.width = w;
+    canvas.height = h;
+  }
+}
+
+function render(){
+  if(!imgLoaded) return;
+  // draw original first
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  // get image
+  const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+  const selected = typeSelect.value;
+  const matrix = MATRICES[selected] || MATRICES.normal;
+  const mix = parseFloat(severity.value);
+  if(selected !== 'normal' && mix>0){
+    applyMatrixToImageData(imageData, matrix, mix);
+    ctx.putImageData(imageData,0,0);
+  }
+}
+
+fileInput.addEventListener('change', e=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  const url = URL.createObjectURL(f);
+  img.onload = ()=>{
+    imgLoaded = true;
+    // downsize if very large for performance
+    const maxW = 1600; const maxH = 1200;
+    let w = img.width, h = img.height;
+    if(w>maxW || h>maxH){
+      const ratio = Math.min(maxW/w, maxH/h);
+      w = Math.round(w*ratio);
+      h = Math.round(h*ratio);
+      // create temporary canvas to resize
+      const t = document.createElement('canvas');
+      t.width = w; t.height = h;
+      t.getContext('2d').drawImage(img,0,0,w,h);
+      img.src = t.toDataURL('image/png');
+      // when img.src changes, onload will fire again — exit early
+      return;
+    }
+
+    resizeCanvasToImage(img.width,img.height);
+    originalPreview.src = url;
+    originalPreview.style.display = 'inline-block';
+    render();
+  };
+  img.src = url;
+});
+
+// redraw when controls change
+[typeSelect, severity].forEach(el=>el.addEventListener('input', ()=>{
+  sevVal.textContent = parseFloat(severity.value).toFixed(2);
+  render();
+}));
+
+// download
+downloadBtn.addEventListener('click', ()=>{
+  if(!imgLoaded) return alert('Carregue uma imagem primeiro.');
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'simulacao.png';
+  a.click();
+});
+
+// click canvas to toggle original
+canvas.addEventListener('click', ()=>{
+  if(!imgLoaded) return;
+  showOriginal = !showOriginal;
+  if(showOriginal){
+    // draw original image
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(originalPreview,0,0,canvas.width,canvas.height);
+  } else {
+    render();
+  }
+});
+
+// initial demo content: draw a colorful gradient if no image
+(function demo(){
+  const w = 800, h = 400;
+  canvas.width = w; canvas.height = h;
+  const g = ctx.createLinearGradient(0,0,w,0);
+  g.addColorStop(0,'#ff3b30'); g.addColorStop(.2,'#ff9500'); g.addColorStop(.4,'#ffcc00');
+  g.addColorStop(.6,'#34c759'); g.addColorStop(.8,'#007aff'); g.addColorStop(1,'#5856d6');
+  ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+  ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.font='20px system-ui';
+  ctx.fillText('Arraste uma imagem aqui ou use o seletor "Imagem"',14,34);
+})();
+
+</script>
+</body>
+</html>
