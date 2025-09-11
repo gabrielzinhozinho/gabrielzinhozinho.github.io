@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minha Conta — YeahTube Revival</title>
+<style>
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    color:#111;
+  }
+
+  /* Topbar */
+  header {
+    background:#cc181e;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:8px 12px;
+    gap:10px;
+  }
+  header .logo {
+    font-weight:bold;
+    font-size:18px;
+  }
+  header nav {
+    margin-left:auto;
+    display:flex;
+    gap:10px;
+  }
+  header nav button {
+    background:transparent;
+    border:none;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+  }
+
+  /* Layout principal */
+  .wrap {
+    display:flex;
+    max-width:1180px;
+    margin:18px auto;
+    gap:16px;
+    padding:0 12px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width:220px;
+  }
+  .sidebar .section {
+    background:#fff;
+    border:1px solid #ddd;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:3px;
+  }
+  .sidebar ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .sidebar li {
+    padding:8px 6px;
+    cursor:pointer;
+    font-size:14px;
+    color:#111;
+  }
+  .sidebar li:hover {
+    background:#f6f6f6;
+  }
+
+  /* Conteúdo da conta */
+  .main {
+    flex:1;
+  }
+  .account-header {
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:4px;
+    padding:12px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .avatar {
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#ccc;
+    flex-shrink:0;
+  }
+  .account-info h1 {
+    margin-bottom:4px;
+    font-size:18px;
+  }
+  .account-info p {
+    font-size:13px;
+    color:#555;
+  }
+
+  /* Uploads recentes */
+  .uploads {
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:4px;
+    padding:12px;
+  }
+  .uploads h2 {
+    font-size:16px;
+    margin-bottom:8px;
+  }
+  .upload-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .upload-list li {
+    display:flex;
+    gap:10px;
+    padding:6px 0;
+    border-bottom:1px solid #eee;
+  }
+  .upload-list li:last-child {
+    border-bottom:none;
+  }
+  .upload-thumb {
+    width:120px;
+    height:70px;
+    background:#000;
+    flex-shrink:0;
+  }
+  .upload-thumb img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .upload-meta {
+    font-size:13px;
+  }
+  .upload-meta .title {
+    font-weight:bold;
+    margin-bottom:2px;
+  }
+  .upload-meta .views {
+    color:#777;
+  }
+
+  /* Mobile: barra inferior */
+  .bottom-nav {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#f9f9f9;
+    border-top:1px solid #ccc;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    height:50px;
+    font-size:13px;
+  }
+  .bottom-nav button {
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+    color:#111;
+  }
+  .bottom-nav button:hover {
+    color:#cc181e;
+  }
+
+  /* Responsivo */
+  @media (max-width:980px){
+    .wrap { flex-direction:column; }
+    .sidebar { width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YeahTube</div>
+  <nav>
+    <button onclick="alert('Home')">Home</button>
+    <button onclick="alert('Explorar vídeos')">Explorar</button>
+    <button onclick="alert('Upload')">Upload</button>
+    <button onclick="alert('Minha Conta')">Conta</button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="section">
+      <ul>
+        <li>Visão geral</li>
+        <li>Meus vídeos</li>
+        <li>Playlists</li>
+        <li>Configurações</li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="account-header">
+      <div class="avatar"></div>
+      <div class="account-info">
+        <h1>GabriKEL</h1>
+        <p>gabrikel@email.com</p>
+        <p>Inscrito em: 12 de setembro de 2010</p>
+      </div>
+    </div>
+
+    <div class="uploads">
+      <h2>Uploads recentes</h2>
+      <ul class="upload-list">
+        <li>
+          <div class="upload-thumb"><img src="https://picsum.photos/seed/101/160/90" alt=""></div>
+          <div class="upload-meta">
+            <div class="title">Tour pelo meu setup retrô</div>
+            <div class="views">1.2M views • há 3 anos</div>
+          </div>
+        </li>
+        <li>
+          <div class="upload-thumb"><img src="https://picsum.photos/seed/102/160/90" alt=""></div>
+          <div class="upload-meta">
+            <div class="title">Top 10 jogos de 2011</div>
+            <div class="views">340k views • há 5 anos</div>
+          </div>
+        </li>
+        <li>
+          <div class="upload-thumb"><img src="https://picsum.photos/seed/103/160/90" alt=""></div>
+          <div class="upload-meta">
+            <div class="title">Compilação de fails clássicos</div>
+            <div class="views">2.4M views • há 6 anos</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</div>
+
+<!-- Barra inferior mobile -->
+<div class="bottom-nav">
+  <button onclick="alert('Home clicado')">🏠<br>Home</button>
+  <button onclick="alert('Explorar clicado')">🔍<br>Explorar vídeos</button>
+  <button onclick="alert('Upload clicado')">⬆️<br>Upload</button>
+  <button onclick="alert('Minha Conta clicado')">👤<br>Minha Conta</button>
+</div>
+
+</body>
+</html>
