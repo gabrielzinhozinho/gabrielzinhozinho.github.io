@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>YeahTube Revival — Old YouTube (2011 style)</title>
+<style>
+  /* Reset simples */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+    color: #111;
+    line-height: 1.2;
+  }
+
+  /* Top bar */
+  .topbar {
+    background: #202020; /* escuro, lembrando header antigo */
+    color: #fff;
+    height: 56px;
+    display:flex;
+    align-items:center;
+    padding: 0 12px;
+    border-bottom: 1px solid #111;
+  }
+  .logo-area {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-right: 12px;
+  }
+  .logo-placeholder {
+    width: 90px;
+    height: 36px;
+    background: linear-gradient(45deg,#dcdcdc,#bdbdbd);
+    border: 2px solid #eee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#333;
+    font-weight:bold;
+    font-size:14px;
+  }
+  /* Search */
+  .search {
+    flex:1;
+    display:flex;
+    justify-content:center;
+  }
+  .search form {
+    display:flex;
+    width: 520px;
+  }
+  .search input[type="text"]{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid #999;
+    border-right:0;
+    outline:none;
+    border-top-left-radius:2px;
+    border-bottom-left-radius:2px;
+  }
+  .search button {
+    padding:8px 14px;
+    border:1px solid #999;
+    background:#e9e9e9;
+    cursor:pointer;
+    border-top-right-radius:2px;
+    border-bottom-right-radius:2px;
+  }
+
+  /* Right area (Sign in / Upload) */
+  .top-actions {
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-left:12px;
+  }
+  .btn {
+    padding:6px 10px;
+    background:#ff4444;
+    color:#fff;
+    border-radius:2px;
+    font-weight:bold;
+    cursor:pointer;
+    border:0;
+  }
+  .signin {
+    background: transparent;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:6px 10px;
+    border-radius:2px;
+    cursor:pointer;
+  }
+
+  /* Layout */
+  .wrap {
+    display:flex;
+    gap:16px;
+    max-width:1180px;
+    margin:18px auto;
+    padding:0 12px;
+  }
+  .sidebar {
+    width:220px;
+  }
+  .sidebar .section {
+    background:#fff;
+    border:1px solid #ddd;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:3px;
+  }
+  .sidebar ul { list-style:none; }
+  .sidebar li {
+    padding:8px 6px;
+    font-size:14px;
+    color:#333;
+    cursor:pointer;
+  }
+  .sidebar li:hover { background:#f6f6f6; }
+
+  /* Main content - grid of videos */
+  .main {
+    flex:1;
+  }
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+  }
+  .video-card {
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .thumb {
+    background:#222;
+    height:160px;
+    position:relative;
+  }
+  .thumb img {
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    display:block;
+  }
+  .duration {
+    position:absolute;
+    right:6px;
+    bottom:6px;
+    background:rgba(0,0,0,0.8);
+    color:#fff;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:2px;
+  }
+  .meta {
+    padding:10px;
+    display:flex;
+    gap:10px;
+  }
+  .avatar {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#ddd;
+    flex-shrink:0;
+  }
+  .info {
+    font-size:13px;
+  }
+  .info .title {
+    font-weight:bold;
+    margin-bottom:6px;
+    color:#111;
+  }
+  .info .channel { color:#555; font-size:12px; margin-bottom:4px;}
+  .info .views { color:#777; font-size:12px; }
+
+  /* Pagination / footer */
+  .pagination {
+    margin:18px 0;
+    text-align:center;
+  }
+  .pagination button {
+    padding:8px 12px;
+    margin:0 4px;
+    border:1px solid #bbb;
+    background:#fff;
+    cursor:pointer;
+    border-radius:2px;
+  }
+
+  /* Responsive */
+  @media (max-width:980px){
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .sidebar { display:none; }
+  }
+  @media (max-width:600px){
+    .grid { grid-template-columns: 1fr; }
+    .search form { width: 100%; padding:0 8px; }
+    .topbar { padding:0 8px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="logo-area">
+      <!-- Troque este bloco pela sua logo quando pronta.
+           Exemplo: <img src="logo.png" alt="Logo" style="height:36px"> -->
+      <div class="logo-placeholder">YEAHTUBE</div>
+      <div style="color:#bbb;font-size:12px;margin-left:6px">revival • 2011 style</div>
+    </div>
+
+    <div class="search" role="search">
+      <form id="searchForm" onsubmit="event.preventDefault(); doSearch();">
+        <input id="searchInput" type="text" placeholder="Pesquisar" aria-label="Pesquisar vídeos">
+        <button type="submit">Pesquisar</button>
+      </form>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn" onclick="alert('Upload simulado')">Enviar</button>
+      <button class="signin" onclick="alert('Faça login — simulação')">Entrar</button>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <div class="wrap">
+    <aside class="sidebar">
+      <div class="section">
+        <ul>
+          <li>Início</li>
+          <li>Em alta</li>
+          <li>Inscrições</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <strong>Guias</strong>
+        <ul style="margin-top:8px">
+          <li>Favoritos</li>
+          <li>Histórico</li>
+          <li>Playlists</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <strong>Canais recomendados</strong>
+        <ul style="margin-top:8px">
+          <li>Canal A</li>
+          <li>Canal B</li>
+          <li>Canal C</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="font-size:18px;color:#222">Vídeos recomendados</h2>
+        <div style="color:#666;font-size:13px">Exibindo 1–9 de 234</div>
+      </div>
+
+      <div id="grid" class="grid">
+        <!-- Cards gerados por JS -->
+      </div>
+
+      <div class="pagination">
+        <button onclick="prevPage()">« Anterior</button>
+        <button onclick="nextPage()">Próxima »</button>
+      </div>
+    </main>
+  </div>
+
+<script>
+/* Dados de exemplo — substitua/adicione seus vídeos */
+const videos = [
+  { id:1, title:"Tour pelo meu setup retrô", channel:"RetroGamer", views:"1.2M", date:"há 3 anos", duration:"12:34", thumb:"https://picsum.photos/seed/1/480/270" },
+  { id:2, title:"Top 10 jogos de 2011", channel:"GameRank", views:"340k", date:"há 5 anos", duration:"9:02", thumb:"https://picsum.photos/seed/2/480/270" },
+  { id:3, title:"Como fazer efeitos em CSS (2011 tutorial)", channel:"WebOldSchool", views:"89k", date:"há 2 anos", duration:"7:45", thumb:"https://picsum.photos/seed/3/480/270" },
+  { id:4, title:"Compilação de fails clássicos", channel:"FailsBR", views:"2.4M", date:"há 6 anos", duration:"4:12", thumb:"https://picsum.photos/seed/4/480/270" },
+  { id:5, title:"Unboxing: câmera antiga", channel:"FotoVintage", views:"56k", date:"há 1 ano", duration:"11:11", thumb:"https://picsum.photos/seed/5/480/270" },
+  { id:6, title:"Fan theory: série nostálgica", channel:"TeoriaTube", views:"412k", date:"há 4 anos", duration:"15:03", thumb:"https://picsum.photos/seed/6/480/270" },
+  { id:7, title:"Cover acústico 2011", channel:"VozDaRua", views:"98k", date:"há 3 anos", duration:"3:50", thumb:"https://picsum.photos/seed/7/480/270" },
+  { id:8, title:"Tutorial: criar layout old YouTube", channel:"DevNostalgia", views:"11k", date:"há 2 meses", duration:"18:20", thumb:"https://picsum.photos/seed/8/480/270" },
+  { id:9, title:"Entrevista com desenvolvedor indie", channel:"IndieCast", views:"22k", date:"há 8 meses", duration:"27:13", thumb:"https://picsum.photos/seed/9/480/270" },
+  // você pode adicionar mais aqui
+];
+
+let currentPage = 0;
+const perPage = 9;
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  const start = currentPage * perPage;
+  const slice = videos.slice(start, start + perPage);
+  slice.forEach(v => {
+    const card = document.createElement('article');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="thumb" onclick="openVideo(${v.id})">
+        <img src="${v.thumb}" alt="${escapeHtml(v.title)}">
+        <div class="duration">${v.duration}</div>
+      </div>
+      <div class="meta">
+        <div class="avatar" aria-hidden="true"></div>
+        <div class="info">
+          <div class="title">${escapeHtml(v.title)}</div>
+          <div class="channel">${escapeHtml(v.channel)}</div>
+          <div class="views">${escapeHtml(v.views)} • ${escapeHtml(v.date)}</div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* simples navegação */
+function prevPage(){
+  if(currentPage > 0){
+    currentPage--;
+    renderGrid();
+  }
+}
+function nextPage(){
+  const max = Math.floor((videos.length - 1) / perPage);
+  if(currentPage < max){
+    currentPage++;
+    renderGrid();
+  }
+}
+
+/* pesquisa simulada */
+function doSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!q){ currentPage = 0; renderGrid(); return; }
+  // filtro simples por título ou canal
+  const results = videos.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q));
+  // substitui grid por resultados
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  if(results.length === 0){
+    grid.innerHTML = '<div style="padding:20px;background:#fff;border:1px solid #ddd;border-radius:4px">Nenhum vídeo encontrado.</div>';
+    return;
+  }
+  results.forEach(v => {
+    const card = document.createElement('article');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="thumb" onclick="openVideo(${v.id})">
+        <img src="${v.thumb}" alt="${escapeHtml(v.title)}">
+        <div class="duration">${v.duration}</div>
+      </div>
+      <div class="meta">
+        <div class="avatar" aria-hidden="true"></div>
+        <div class="info">
+          <div class="title">${escapeHtml(v.title)}</div>
+          <div class="channel">${escapeHtml(v.channel)}</div>
+          <div class="views">${escapeHtml(v.views)} • ${escapeHtml(v.date)}</div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* abrir "video" — versão simples: modal / alerta */
+function openVideo(id){
+  const v = videos.find(x => x.id === id);
+  if(!v) return;
+  // Simula abrir página de vídeo antiga com uma nova janela (página separada)
+  const html = `
+    <!doctype html>
+    <html>
+    <head><meta charset="utf-8"><title>${escapeHtml(v.title)}</title>
+    <style>
+      body{font-family:Arial;background:#f2f2f2;margin:0;padding:20px;color:#111}
+      .player{max-width:900px;margin:0 auto;background:#000;height:500px;display:flex;align-items:center;justify-content:center;color:#fff}
+      .meta{max-width:900px;margin:12px auto;background:#fff;padding:12px;border:1px solid #ddd}
+      a{color:#d33}
+    </style>
+    </head>
+    <body>
+      <div class="player">${escapeHtml(v.title)} — Player simulado</div>
+      <div class="meta">
+        <h1 style="font-size:18px;margin-bottom:6px">${escapeHtml(v.title)}</h1>
+        <div style="color:#666;margin-bottom:8px">${escapeHtml(v.channel)} • ${escapeHtml(v.views)} • ${escapeHtml(v.date)}</div>
+        <p>Descrição do vídeo (simulada). <a href="#" onclick="window.close()">Fechar</a></p>
+      </div>
+    </body>
+    </html>
+  `;
+  const win = window.open('', '_blank', 'width=980,height=700');
+  win.document.write(html);
+  win.document.close();
+}
+
+/* utilidades */
+function escapeHtml(str){
+  if(!str) return '';
+  return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+/* Inicializa grid */
+renderGrid();
+</script>
+</body>
+</html>
