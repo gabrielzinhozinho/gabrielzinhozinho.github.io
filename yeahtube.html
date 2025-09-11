@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Clássico</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      color: #000;
+    }
+
+    /* Topbar */
+    .topbar {
+      background-color: #c4302b;
+      padding: 10px 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 120px;
+      height: 40px;
+      background-color: white;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #c4302b;
+      font-size: 20px;
+    }
+
+    .search-bar {
+      flex: 1;
+    }
+
+    .search-bar input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    .search-bar input[type="submit"] {
+      padding: 5px 10px;
+      background-color: #e62117;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Navigation */
+    .nav {
+      background-color: #eeeeee;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .nav a {
+      margin-right: 15px;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Video section */
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .video-thumb {
+      width: 300px;
+      margin: 10px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: auto;
+    }
+
+    .video-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .video-meta {
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="logo">
+      LOGO
+      <!-- Você pode substituir por uma imagem com: 
+      <img src="sua-logo.png" alt="Logo" style="height: 100%;"> -->
+    </div>
+    <div class="search-bar">
+      <form>
+        <input type="text" placeholder="Buscar">
+        <input type="submit" value="Buscar">
+      </form>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <a href="#">Início</a>
+    <a href="#">Tendências</a>
+    <a href="#">Categorias</a>
+    <a href="#">Minha Conta</a>
+    <a href="#">Enviar vídeo</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="video-thumb">
+      <img src="https://via.placeholder.com/300x180.png?text=Vídeo+1" alt="Vídeo 1">
+      <div class="video-title">Título do Vídeo 1</div>
+      <div class="video-meta">por Usuário1 • 1M visualizações • 10 anos atrás</div>
+    </div>
+
+    <div class="video-thumb">
+      <img src="https://via.placeholder.com/300x180.png?text=Vídeo+2" alt="Vídeo 2">
+      <div class="video-title">Título do Vídeo 2</div>
+      <div class="video-meta">por Usuário2 • 500 mil visualizações • 9 anos atrás</div>
+    </div>
+
+    <!-- Adicione mais blocos de vídeo aqui -->
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    © 2008 YouTube Clássico - Este é um projeto de revival fictício
+  </div>
+
+</body>
+</html>
