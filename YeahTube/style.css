@@ -1,100 +1,14 @@
-/* Reset básico */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Header estilo YouTube antigo */
-header {
-    background-color: #cc0000;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-}
-
-header .logo {
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-    font-weight: bold;
-}
-
-nav {
-    margin-top: 5px;
-}
-
-/* Conteúdo principal */
-main {
-    padding: 20px;
-}
-
-/* Vídeos estilo cards */
-.videos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.video-card {
-    background: #f2f2f2;
-    width: calc(33% - 10px);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-    text-align: center;
-}
-
-.video-card .thumbnail {
-    background-color: #ddd;
-    height: 120px;
-    line-height: 120px;
-}
-
-.video-card .title {
-    padding: 5px;
-    font-size: 14px;
-}
-
-/* Formulário upload */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 300px;
-}
-
-form input, form button {
-    padding: 8px;
-    font-size: 14px;
-}
-
-button {
-    background-color: #cc0000;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #990000;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .videos {
-        flex-direction: column;
-    }
-    .video-card {
-        width: 100%;
-    }
-}
+* { box-sizing: border-box; margin:0; padding:0; font-family: Arial, sans-serif; }
+header { background-color:#cc0000; color:white; padding:10px; }
+header .logo { font-weight:bold; font-size:24px; margin-bottom:5px; }
+nav a { color:white; text-decoration:none; margin-right:15px; font-weight:bold; }
+main { padding:20px; }
+.videos { display:flex; flex-wrap:wrap; gap:15px; margin-top:20px; }
+.video-card { background:#f2f2f2; width:calc(33% - 10px); border:1px solid #ccc; border-radius:5px; overflow:hidden; text-align:center; }
+.video-card .thumbnail { background:#ddd; height:120px; line-height:120px; }
+.video-card .title { padding:5px; font-size:14px; }
+form { display:flex; flex-direction:column; gap:10px; max-width:300px; margin-top:10px; }
+form input, form button { padding:8px; font-size:14px; }
+button { background-color:#cc0000; color:white; border:none; cursor:pointer; }
+button:hover { background-color:#990000; }
+@media (max-width:768px) { .videos { flex-direction:column; } .video-card { width:100%; } }
