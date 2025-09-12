@@ -1,45 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YeahTube Revival</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YeahTube Mobile (2011)</title>
+<style>
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#fff;
+    color:#111;
+    padding-bottom:60px; /* espaço para a barra inferior */
+  }
+  header {
+    background:#cc181e; /* vermelho clássico do YouTube */
+    color:#fff;
+    padding:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  header .logo {
+    font-weight:bold;
+    font-size:18px;
+  }
+  header input[type="text"]{
+    flex:1;
+    padding:6px;
+    border:0;
+    border-radius:2px;
+    font-size:14px;
+  }
+  header button {
+    padding:6px 10px;
+    background:#fff;
+    border:0;
+    border-radius:2px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#cc181e;
+  }
+
+  .video-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .video {
+    border-bottom:1px solid #ddd;
+    display:flex;
+    padding:8px;
+    gap:8px;
+  }
+  .thumb {
+    width:120px;
+    height:90px;
+    background:#000;
+    flex-shrink:0;
+  }
+  .thumb img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .meta {
+    flex:1;
+    font-size:13px;
+  }
+  .title {
+    font-weight:bold;
+    margin-bottom:4px;
+  }
+  .channel {
+    color:#555;
+    margin-bottom:2px;
+  }
+  .views {
+    color:#777;
+    font-size:12px;
+  }
+
+  /* Barra de navegação inferior */
+  .bottom-nav {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#f9f9f9;
+    border-top:1px solid #ccc;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    height:50px;
+    font-size:13px;
+  }
+  .bottom-nav button {
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+    color:#111;
+  }
+  .bottom-nav button:hover {
+    color:#cc181e;
+  }
+
+  footer {
+    display:none; /* escondemos o footer antigo, usamos barra inferior */
+  }
+</style>
 </head>
 <body>
+
 <header>
-  <h1>YeahTube Revival</h1>
+  <div class="logo">YeahTube</div>
+<img src="/Logo/Capturar-removebg-preview.png" alt="YeahTube" class="logo" style="height:36px;">
+  <button>OK</button>
 </header>
 
-<main>
-  <section id="videos">
-    <h2>Vídeos</h2>
-    <div id="videoList">Carregando vídeos...</div>
-  </section>
+<ul class="video-list">
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/11/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Tour pelo meu setup retrô</div>
+      <div class="channel">RetroGamer</div>
+      <div class="views">1.2M views • há 3 anos</div>
+    </div>
+  </li>
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/22/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Top 10 jogos de 2011</div>
+      <div class="channel">GameRank</div>
+      <div class="views">340k views • há 5 anos</div>
+    </div>
+  </li>
+  <li class="video">
+    <div class="thumb"><img src="https://picsum.photos/seed/33/160/120" alt=""></div>
+    <div class="meta">
+      <div class="title">Compilação de fails clássicos</div>
+      <div class="channel">FailsBR</div>
+      <div class="views">2.4M views • há 6 anos</div>
+    </div>
+  </li>
+</ul>
 
-  <section id="loginSection">
-    <h2>Login (opcional)</h2>
-    <input type="text" id="logUser" placeholder="Usuário">
-    <input type="password" id="logPass" placeholder="Senha">
-    <button onclick="login()">Login</button>
-    <p>Ainda não tem conta? <button onclick="toggleRegister()">Registrar</button></p>
-  </section>
+<!-- Barra inferior -->
+<div class="bottom-nav">
+  <button onclick="alert('Home clicado')">
+    🏠<br>Home
+  </button>
+  <button onclick="alert('Explorar clicado')">
+    🔍<br>Explorar vídeos
+  </button>
+  <button onclick="alert('Upload clicado')">
+    ⬆️<br>Upload
+  </button>
+  <button onclick="alert('Minha Conta clicado')">
+    👤<br>Minha Conta
+  </button>
+</div>
 
-  <section id="registerSection" style="display:none;">
-    <h2>Registrar</h2>
-    <input type="text" id="regUser" placeholder="Usuário">
-    <input type="password" id="regPass" placeholder="Senha">
-    <button onclick="register()">Registrar</button>
-    <button onclick="toggleRegister()">Cancelar</button>
-  </section>
-
-  <section id="uploadSection" style="display:none;">
-    <h2>Enviar Vídeo</h2>
-    <input type="file" id="videoFile" accept="video/*">
-    <button onclick="uploadVideo()">Enviar</button>
-  </section>
-</main>
-
-<script src="app.js"></script>
 </body>
-</html
+</html>
