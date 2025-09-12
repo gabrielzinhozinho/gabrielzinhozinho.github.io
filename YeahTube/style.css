@@ -1,67 +1,100 @@
+/* Reset básico */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-body {
-  background: #f9f9f9;
-  padding: 10px;
-}
-
+/* Header estilo YouTube antigo */
 header {
-  text-align: center;
-  margin-bottom: 20px;
+    background-color: #cc0000;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
 
-h1 {
-  font-size: 1.8em;
-  color: #ff0000; /* estilo YouTube antigo */
+header .logo {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 5px;
 }
 
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+nav {
+    margin-top: 5px;
+}
+
+/* Conteúdo principal */
 main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    padding: 20px;
 }
 
-section {
-  background: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* Vídeos estilo cards */
+.videos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.video-card {
+    background: #f2f2f2;
+    width: calc(33% - 10px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.video-card .thumbnail {
+    background-color: #ddd;
+    height: 120px;
+    line-height: 120px;
+}
+
+.video-card .title {
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Formulário upload */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+}
+
+form input, form button {
+    padding: 8px;
+    font-size: 14px;
 }
 
 button {
-  width: 100%;
-  padding: 12px;
-  background: #ff0000;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 button:hover {
-  background: #cc0000;
+    background-color: #990000;
 }
 
-/* Responsivo */
-@media (min-width: 600px) {
-  main {
-    max-width: 500px;
-    margin: auto;
-  }
+/* Mobile */
+@media (max-width: 768px) {
+    .videos {
+        flex-direction: column;
+    }
+    .video-card {
+        width: 100%;
+    }
 }
